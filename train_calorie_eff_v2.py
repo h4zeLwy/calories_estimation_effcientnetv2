@@ -75,7 +75,7 @@ if __name__=='__main__':
         model.add(Dropout(0.25))
         model.add(Dense(1, activation='relu'))
         model.summary()
-        csv_logger = CSVLogger('log_EffB3.csv', append=True, separator=';')
+        csv_logger = CSVLogger('log_EffNetV2_M.csv', append=True, separator=';')
 
         model.compile(
             loss='mean_squared_error',
@@ -90,14 +90,14 @@ if __name__=='__main__':
         history = model.fit(
             augs_gen.flow(x, y, batch_size=10),
             steps_per_epoch  = 78,
-            epochs = 200, 
+            epochs = 150, 
             verbose = 1,
             callbacks=[csv_logger]
         )
 
-        model.save("model_estimation_EffB3.h5")
+        model.save("model_estimation_EffNetV2_M.h5")
     elif args.option=='test':
-        model = load_model('model_estimation_EffB3.h5')
+        model = load_model('model_estimation_EffNetV2_M.h5')
         y_pred = model.predict(x)
 
         result = pd.DataFrame({'real':y.flatten(), 'predict':y_pred.flatten()})
